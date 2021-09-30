@@ -97,7 +97,7 @@ function PostDialog({ postId, userHandle }) {
                component={Link}
                color="primary"
                variant="h5"
-               to={`/user/${userHandle}`}
+               to={`/users/${userHandle}`}
             >
                @{userHandle}
             </Typography>

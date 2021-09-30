@@ -16,7 +16,7 @@ import { format } from "timeago.js";
 import { uploadImage } from "../../redux/actions/userActions";
 import EditDetails from "./EditDetails";
 
-const useStyle = makeStyles({
+const useStyles = makeStyles({
    paper: {
       padding: 20,
       marginBottom: 20,
@@ -70,7 +70,7 @@ const useStyle = makeStyles({
 });
 
 function Profile() {
-   const classes = useStyle();
+   const classes = useStyles();
    const dispatch = useDispatch();
    const {
       user: { credentials, loading, authenticated },
@@ -114,7 +114,7 @@ function Profile() {
                <div className="profile-details">
                   <MuiLink
                      component={Link}
-                     to={`/user/${credentials.handle}`}
+                     to={`/users/${credentials.handle}`}
                      variant="h5"
                      style={{ color: "#000a12" }}
                   >

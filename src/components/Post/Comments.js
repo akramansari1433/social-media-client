@@ -46,7 +46,7 @@ function Comments({ comments }) {
                               <Typography
                                  variant="h6"
                                  component={Link}
-                                 to={`/user/${userHandle}`}
+                                 to={`/users/${userHandle}`}
                               >
                                  {userHandle}
                               </Typography>
