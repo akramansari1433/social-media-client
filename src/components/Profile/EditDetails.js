@@ -4,10 +4,8 @@ import {
    DialogActions,
    DialogContent,
    DialogTitle,
-   IconButton,
    makeStyles,
    TextField,
-   Tooltip,
 } from "@material-ui/core";
 import { Edit } from "@material-ui/icons";
 import React, { Fragment, useEffect, useState } from "react";
@@ -20,6 +18,10 @@ const useStyle = makeStyles({
    },
    textField: {
       margin: "10px auto 10px auto",
+   },
+   button: {
+      margin: "10px auto",
+      display: "flex",
    },
 });
 
@@ -64,11 +66,16 @@ function EditDetails() {
 
    return (
       <Fragment>
-         <Tooltip title="Edit details" placement="top">
-            <IconButton onClick={handleOpen}>
-               <Edit color="secondary" />
-            </IconButton>
-         </Tooltip>
+         <Button
+            onClick={handleOpen}
+            variant="outlined"
+            color="secondary"
+            className={classes.button}
+         >
+            <Edit color="secondary" />
+            <span>Edit Profile</span>
+         </Button>
+
          <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
             <DialogTitle>Edit your details.</DialogTitle>
             <DialogContent>

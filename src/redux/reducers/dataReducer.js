@@ -5,6 +5,8 @@ import {
    UNLIKE_POST,
    DELETE_POST,
    CREATE_POST,
+   SET_POSTS,
+   SUBMIT_COMMENT,
 } from "../types";
 
 const initialState = {
@@ -20,11 +22,16 @@ export default function dataReducer(state = initialState, action) {
             ...state,
             loading: true,
          };
-      case SET_POST:
+      case SET_POSTS:
          return {
             ...state,
             posts: action.payload,
             loading: false,
+         };
+      case SET_POST:
+         return {
+            ...state,
+            post: action.payload,
          };
       case CREATE_POST:
          return {
@@ -37,8 +44,20 @@ export default function dataReducer(state = initialState, action) {
             (post) => post.postId === action.payload.postId
          );
          state.posts[index] = action.payload;
+         if (state.post.postId === action.payload.postId) {
+            state.post = action.payload;
+         }
+
          return {
             ...state,
+         };
+      case SUBMIT_COMMENT:
+         return {
+            ...state,
+            post: {
+               ...state.post,
+               comments: [action.payload, ...state.post.comments],
+            },
          };
       case DELETE_POST:
          let i = state.posts.findIndex(

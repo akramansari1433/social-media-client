@@ -10,10 +10,10 @@ import React, { Fragment } from "react";
 import MuiLink from "@material-ui/core/Link";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { CalendarToday, Edit, ExitToApp, LocationOn } from "@material-ui/icons";
+import { CalendarToday, Edit, LocationOn } from "@material-ui/icons";
 import LinkIcon from "@material-ui/icons/Link";
 import { format } from "timeago.js";
-import { uploadImage, logoutUser } from "../../redux/actions/userActions";
+import { uploadImage } from "../../redux/actions/userActions";
 import EditDetails from "./EditDetails";
 
 const useStyle = makeStyles({
@@ -63,6 +63,10 @@ const useStyle = makeStyles({
          margin: "20px 10px",
       },
    },
+   editButton: {
+      display: "flex",
+      margin: "auto",
+   },
 });
 
 function Profile() {
@@ -82,10 +86,6 @@ function Profile() {
    const handleEditPicture = () => {
       const fileInput = document.getElementById("imageInput");
       fileInput.click();
-   };
-
-   const hnadleLogout = () => {
-      dispatch(logoutUser());
    };
 
    let profile = !loading ? (
@@ -150,12 +150,7 @@ function Profile() {
                   <CalendarToday color="primary" />
                   <span>Joined {format(credentials.createdAt)}</span>
                </div>
-               <EditDetails />
-               <Tooltip title="Logout" placement="top">
-                  <IconButton onClick={hnadleLogout}>
-                     <ExitToApp color="secondary" />
-                  </IconButton>
-               </Tooltip>
+               <EditDetails className={classes.editButton} />
             </div>
          </Paper>
       ) : (

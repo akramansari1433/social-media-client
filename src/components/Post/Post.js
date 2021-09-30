@@ -8,12 +8,14 @@ import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+
 import { makeStyles, Tooltip } from "@material-ui/core";
-import { likePost, unlikePost } from "../../redux/actions/dataActions";
-import { Comment, FavoriteBorder } from "@material-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
+
+import { Comment } from "@material-ui/icons";
+import { useSelector } from "react-redux";
 import DeletePost from "./DeletePost";
+import PostDialog from "./PostDialog";
+import LikeButton from "./LikeButton";
 
 const useStyle = makeStyles({
    card: {
@@ -23,55 +25,13 @@ const useStyle = makeStyles({
 });
 
 export default function Post({ post }) {
-   const dispatch = useDispatch();
    const {
       user: {
-         likes,
          authenticated,
          credentials: { handle },
       },
    } = useSelector((state) => state);
    const classes = useStyle();
-
-   const likedPost = () => {
-      if (likes && likes.find((like) => like.postId === post.postId)) {
-         return true;
-      } else return false;
-   };
-
-   const like = () => {
-      dispatch(likePost(post.postId));
-   };
-
-   const unlike = () => {
-      dispatch(unlikePost(post.postId));
-   };
-
-   const likeButton = !authenticated ? (
-      <Tooltip title="Like" placement="top-end">
-         <Link to="/login">
-            <IconButton aria-label="share">
-               <FavoriteBorder color="secondary" />
-            </IconButton>
-         </Link>
-      </Tooltip>
-   ) : likedPost() ? (
-      <Tooltip title="Undo like" placement="top-end">
-         <Link to="/login">
-            <IconButton aria-label="share" onClick={unlike}>
-               <FavoriteIcon color="secondary" />
-            </IconButton>
-         </Link>
-      </Tooltip>
-   ) : (
-      <Tooltip title="Like" placement="top-end">
-         <Link to="/login">
-            <IconButton aria-label="share" onClick={like}>
-               <FavoriteBorder color="secondary" />
-            </IconButton>
-         </Link>
-      </Tooltip>
-   );
 
    const deleteButton =
       authenticated && post.userHandle === handle ? (
@@ -100,7 +60,7 @@ export default function Post({ post }) {
             </Typography>
          </CardContent>
          <CardActions disableSpacing>
-            {likeButton}
+            <LikeButton postId={post.postId} />
             <span>{post.likeCount} Likes</span>
             <Tooltip title="Comment" placement="top-end">
                <IconButton aria-label="share">
@@ -108,6 +68,7 @@ export default function Post({ post }) {
                </IconButton>
             </Tooltip>
             <span>{post.commentCount} Comments</span>
+            <PostDialog postId={post.postId} userHandle={post.userHandle} />
          </CardActions>
       </Card>
    );

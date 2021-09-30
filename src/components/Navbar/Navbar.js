@@ -1,15 +1,19 @@
 import {
    AppBar,
    Button,
+   Dialog,
+   DialogActions,
+   DialogTitle,
    IconButton,
    makeStyles,
    Toolbar,
    Tooltip,
 } from "@material-ui/core";
-import { Home, Notifications } from "@material-ui/icons";
-import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import { ExitToApp, Home, Notifications } from "@material-ui/icons";
+import React, { Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { logoutUser } from "../../redux/actions/userActions";
 
 const useStyle = makeStyles({
    navContainer: {
@@ -21,8 +25,24 @@ const useStyle = makeStyles({
 });
 
 export default function Navbar() {
+   const dispatch = useDispatch();
    const classes = useStyle();
    const { authenticated } = useSelector((state) => state.user);
+   const [open, setOpen] = useState(false);
+
+   const handleOpen = () => {
+      setOpen(true);
+   };
+
+   const handleClose = () => {
+      setOpen(false);
+   };
+
+   const handleSubmit = () => {
+      dispatch(logoutUser());
+      setOpen(false);
+   };
+
    return (
       <div>
          <AppBar position="fixed">
@@ -42,6 +62,36 @@ export default function Navbar() {
                            <Notifications />
                         </IconButton>
                      </Tooltip>
+
+                     <Tooltip title="Logout" placement="top">
+                        <IconButton onClick={handleOpen}>
+                           <ExitToApp color="secondary" />
+                        </IconButton>
+                     </Tooltip>
+                     <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        fullWidth
+                        maxWidth="xs"
+                     >
+                        <DialogTitle>Are you sure want logout?</DialogTitle>
+                        <DialogActions>
+                           <Button
+                              onClick={handleClose}
+                              color="primary"
+                              variant="outlined"
+                           >
+                              Cancel
+                           </Button>
+                           <Button
+                              onClick={handleSubmit}
+                              color="secondary"
+                              variant="outlined"
+                           >
+                              Logout
+                           </Button>
+                        </DialogActions>
+                     </Dialog>
                   </Fragment>
                ) : (
                   <Fragment>
