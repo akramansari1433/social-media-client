@@ -9,11 +9,12 @@ import {
    Toolbar,
    Tooltip,
 } from "@material-ui/core";
-import { ExitToApp, Home, Notifications } from "@material-ui/icons";
+import { ExitToApp, Home } from "@material-ui/icons";
 import React, { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../../redux/actions/userActions";
+import Notifications from "./Notifications";
 
 const useStyle = makeStyles({
    navContainer: {
@@ -57,11 +58,7 @@ export default function Navbar() {
                         </Link>
                      </Tooltip>
 
-                     <Tooltip title="Notifications" placement="top">
-                        <IconButton>
-                           <Notifications />
-                        </IconButton>
-                     </Tooltip>
+                     <Notifications />
 
                      <Tooltip title="Logout" placement="top">
                         <IconButton onClick={handleOpen}>

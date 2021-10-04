@@ -11,9 +11,13 @@ function User() {
    const dispatch = useDispatch();
    const { posts, loading } = useSelector((state) => state.data);
    const [profile, setProfile] = useState(null);
-   const { handle } = useParams();
+   const [postIdParam, setPostIdParam] = useState(null);
+   const { handle, postId } = useParams();
 
    useEffect(() => {
+      if (postId) {
+         setPostIdParam(postId);
+      }
       dispatch(getUserData(handle));
       axios
          .get(`/user/${handle}`)
@@ -23,14 +27,20 @@ function User() {
          .catch((err) => {
             console.log(err);
          });
-   }, [dispatch, handle]);
+   }, [dispatch, handle, postId]);
 
    const postsMarkup = loading ? (
       <p>Loading data...</p>
    ) : posts.length === 0 ? (
       <p style={{ textAlign: "center" }}>No posts from this user.</p>
-   ) : (
+   ) : !postIdParam ? (
       posts.map((post) => <Post key={post.postId} post={post} />)
+   ) : (
+      posts.map((post) => {
+         if (post.postId !== postIdParam)
+            return <Post key={post.postId} post={post} />;
+         else return <Post key={post.postId} post={post} openDialog />;
+      })
    );
    return (
       <Grid container>

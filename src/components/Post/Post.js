@@ -24,7 +24,7 @@ const useStyle = makeStyles({
    },
 });
 
-export default function Post({ post }) {
+export default function Post({ post, openDialog }) {
    const {
       user: {
          authenticated,
@@ -68,7 +68,11 @@ export default function Post({ post }) {
                </IconButton>
             </Tooltip>
             <span>{post.commentCount} Comments</span>
-            <PostDialog postId={post.postId} userHandle={post.userHandle} />
+            <PostDialog
+               postId={post.postId}
+               userHandle={post.userHandle}
+               openDialog={openDialog}
+            />
          </CardActions>
       </Card>
    );

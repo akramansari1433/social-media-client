@@ -9,7 +9,7 @@ import {
    Typography,
 } from "@material-ui/core";
 import { Close, Comment, UnfoldMore } from "@material-ui/icons";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -52,10 +52,12 @@ const useStyles = makeStyles({
    },
 });
 
-function PostDialog({ postId, userHandle }) {
+function PostDialog({ postId, userHandle, openDialog }) {
    const classes = useStyles();
    const dispatch = useDispatch();
    const [open, setOpen] = useState(false);
+   const [oldPath, setOldPath] = useState("");
+
    const {
       data: {
          post: {
@@ -70,12 +72,28 @@ function PostDialog({ postId, userHandle }) {
       UI,
    } = useSelector((state) => state);
 
+   useEffect(() => {
+      if (openDialog) {
+         handleOpen();
+      }
+   }, []);
+
    const handleOpen = () => {
+      let oldPath = window.location.pathname;
+      const newPath = `/users/${userHandle}/post/${postId}`;
+
+      if (oldPath === newPath) oldPath = `/users/${userHandle}`;
+
+      window.history.pushState(null, null, newPath);
+
+      setOldPath(oldPath);
       setOpen(true);
+
       dispatch(getPost(postId));
    };
 
    const handleClose = () => {
+      window.history.pushState(null, null, oldPath);
       setOpen(false);
    };
 
