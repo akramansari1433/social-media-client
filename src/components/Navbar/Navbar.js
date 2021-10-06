@@ -42,6 +42,7 @@ export default function Navbar() {
    const handleSubmit = () => {
       dispatch(logoutUser());
       setOpen(false);
+      window.location.href = "/";
    };
 
    return (

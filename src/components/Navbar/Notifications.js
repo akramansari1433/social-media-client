@@ -71,6 +71,7 @@ function Notifications() {
                   <Typography
                      component={Link}
                      variant="body1"
+                     color={iconColor}
                      to={`/users/${not.recipient}/post/${not.postId}`}
                   >
                      {not.sender} {verb} your post {time}
@@ -89,6 +90,7 @@ function Notifications() {
             <IconButton
                aria-owns={anchorEl ? "simple menu" : undefined}
                aria-haspopup="true"
+               aria-controls="not-menu"
                onClick={handleOpen}
             >
                {notificationIcon}
@@ -96,8 +98,10 @@ function Notifications() {
          </Tooltip>
          <Menu
             anchorEl={anchorEl}
+            id="not-menu"
             open={Boolean(anchorEl)}
             onClose={handleClose}
+            style={{ marginTop: 50 }}
          >
             {notificationsMarkup}
          </Menu>

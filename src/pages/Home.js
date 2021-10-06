@@ -5,6 +5,7 @@ import CreatePost from "../components/Post/CreatePost";
 import Post from "../components/Post/Post";
 import Profile from "../components/Profile/Profile";
 import { getPosts } from "../redux/actions/dataActions";
+import PostSkeleton from "../utils/PostSkeleton";
 
 export default function Home() {
    const dispatch = useDispatch();
@@ -35,7 +36,7 @@ export default function Home() {
             {!loading ? (
                posts.map((post) => <Post post={post} key={post.postId} />)
             ) : (
-               <p style={{ textAlign: "center" }}>Loading...</p>
+               <PostSkeleton />
             )}
          </Grid>
       </Grid>

@@ -18,6 +18,9 @@ import User from "./pages/User";
 
 const theme = createTheme(themeObject);
 
+axios.defaults.baseURL =
+   "https://asia-south1-social-media-a38ca.cloudfunctions.net/api";
+
 const token = localStorage.FBIdToken;
 if (token) {
    const decodedToken = jwtDecode(token);

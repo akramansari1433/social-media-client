@@ -15,6 +15,7 @@ import LinkIcon from "@material-ui/icons/Link";
 import { format } from "timeago.js";
 import { uploadImage } from "../../redux/actions/userActions";
 import EditDetails from "./EditDetails";
+import ProfileSkeleton from "../../utils/ProfileSkeleton";
 
 const useStyles = makeStyles({
    paper: {
@@ -179,7 +180,7 @@ function Profile() {
          </Paper>
       )
    ) : (
-      <p>Loading...</p>
+      <ProfileSkeleton />
    );
    return profile;
 }

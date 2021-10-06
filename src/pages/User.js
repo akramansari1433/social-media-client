@@ -6,6 +6,8 @@ import { useParams } from "react-router";
 import Post from "../components/Post/Post";
 import StaticProfile from "../components/Profile/StaticProfile";
 import { getUserData } from "../redux/actions/dataActions";
+import PostSkeleton from "../utils/PostSkeleton";
+import ProfileSkeleton from "../utils/ProfileSkeleton";
 
 function User() {
    const dispatch = useDispatch();
@@ -30,7 +32,7 @@ function User() {
    }, [dispatch, handle, postId]);
 
    const postsMarkup = loading ? (
-      <p>Loading data...</p>
+      <PostSkeleton />
    ) : posts.length === 0 ? (
       <p style={{ textAlign: "center" }}>No posts from this user.</p>
    ) : !postIdParam ? (
@@ -46,7 +48,7 @@ function User() {
       <Grid container>
          <Grid item sm={4} xs={12}>
             {profile === null ? (
-               <p>Loading profile...</p>
+               <ProfileSkeleton />
             ) : (
                <StaticProfile profile={profile} />
             )}
