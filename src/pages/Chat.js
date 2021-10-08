@@ -37,7 +37,7 @@ function Chat() {
 
    useEffect(() => {
       dispatch(getMessages());
-   }, [dispatch]);
+   });
 
    const handleSubmit = (event) => {
       event.preventDefault();
