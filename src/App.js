@@ -15,6 +15,7 @@ import { logoutUser, getUserData } from "./redux/actions/userActions";
 import axios from "axios";
 import { createTheme, MuiThemeProvider } from "@material-ui/core";
 import User from "./pages/User";
+import Chat from "./pages/Chat";
 
 const theme = createTheme(themeObject);
 
@@ -45,6 +46,7 @@ function App() {
                      <Route exact path="/" component={Home} />
                      <AuthRoute path="/login" component={Login} />
                      <AuthRoute path="/signup" component={Signup} />
+                     <Route path="/chat" component={Chat} />
                      <Route exact path="/users/:handle" component={User} />
                      <Route
                         exact

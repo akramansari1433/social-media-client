@@ -9,7 +9,7 @@ import {
    Toolbar,
    Tooltip,
 } from "@material-ui/core";
-import { ExitToApp, Home } from "@material-ui/icons";
+import { ChatBubble, ExitToApp, Home } from "@material-ui/icons";
 import React, { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -55,6 +55,13 @@ export default function Navbar() {
                         <Link to="/">
                            <IconButton>
                               <Home />
+                           </IconButton>
+                        </Link>
+                     </Tooltip>
+                     <Tooltip title="Chat" placement="top">
+                        <Link to="/chat">
+                           <IconButton>
+                              <ChatBubble />
                            </IconButton>
                         </Link>
                      </Tooltip>

@@ -10,7 +10,6 @@ import { createNewPost } from "../../redux/actions/dataActions";
 
 const useStyles = makeStyles({
    card: {
-      margin: "0 20px",
       marginBottom: 15,
    },
    button: {

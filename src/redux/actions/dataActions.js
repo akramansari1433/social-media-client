@@ -12,6 +12,8 @@ import {
    SET_POST,
    STOP_LOADING,
    SUBMIT_COMMENT,
+   SET_MESSAGES,
+   SEND_MESSAGE,
 } from "../types";
 
 //get all post
@@ -142,5 +144,38 @@ export const getUserData = (userHandle) => (dispatch) => {
             type: SET_POSTS,
             payload: null,
          });
+      });
+};
+
+//get messages
+export const getMessages = () => (dispatch) => {
+   axios
+      .get("/chat/getAllMessage")
+      .then((res) => {
+         dispatch({
+            type: SET_MESSAGES,
+            payload: res.data,
+         });
+      })
+      .catch((err) => {
+         dispatch({
+            type: SET_MESSAGES,
+            payload: [],
+         });
+      });
+};
+
+//send message
+export const sendMessage = (message) => (dispatch) => {
+   axios
+      .post("chat/sendMessage", message)
+      .then((res) => {
+         dispatch({
+            type: SEND_MESSAGE,
+            payload: res.data,
+         });
+      })
+      .catch((err) => {
+         console.log(err);
       });
 };

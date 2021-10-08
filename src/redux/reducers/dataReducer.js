@@ -7,12 +7,15 @@ import {
    CREATE_POST,
    SET_POSTS,
    SUBMIT_COMMENT,
+   SET_MESSAGES,
+   SEND_MESSAGE,
 } from "../types";
 
 const initialState = {
    posts: [],
    post: {},
    loading: false,
+   messages: [],
 };
 
 export default function dataReducer(state = initialState, action) {
@@ -66,6 +69,16 @@ export default function dataReducer(state = initialState, action) {
          state.posts.splice(i, 1);
          return {
             ...state,
+         };
+      case SET_MESSAGES:
+         return {
+            ...state,
+            messages: action.payload,
+         };
+      case SEND_MESSAGE:
+         return {
+            ...state,
+            messages: [action.payload, ...state.messages],
          };
 
       default:

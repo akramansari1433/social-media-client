@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CreatePost from "../components/Post/CreatePost";
@@ -7,7 +7,17 @@ import Profile from "../components/Profile/Profile";
 import { getPosts } from "../redux/actions/dataActions";
 import PostSkeleton from "../utils/PostSkeleton";
 
+const useStyles = makeStyles({
+   profile: {
+      padding: "0 1rem",
+   },
+   post: {
+      padding: "0 1rem",
+   },
+});
+
 export default function Home() {
+   const classes = useStyles();
    const dispatch = useDispatch();
 
    useEffect(() => {
@@ -28,10 +38,10 @@ export default function Home() {
 
    return (
       <Grid container>
-         <Grid item sm={4} xs={12}>
+         <Grid item sm={4} xs={12} className={classes.profile}>
             <Profile />
          </Grid>
-         <Grid item sm={8} xs={12}>
+         <Grid item sm={8} xs={12} className={classes.post}>
             {createPost}
             {!loading ? (
                posts.map((post) => <Post post={post} key={post.postId} />)
