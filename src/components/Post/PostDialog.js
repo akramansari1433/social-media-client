@@ -72,12 +72,6 @@ function PostDialog({ postId, userHandle, openDialog }) {
       UI,
    } = useSelector((state) => state);
 
-   useEffect(() => {
-      if (openDialog) {
-         handleOpen();
-      }
-   }, []);
-
    const handleOpen = () => {
       let oldPath = window.location.pathname;
       const newPath = `/users/${userHandle}/post/${postId}`;
@@ -96,6 +90,22 @@ function PostDialog({ postId, userHandle, openDialog }) {
       window.history.pushState(null, null, oldPath);
       setOpen(false);
    };
+
+   useEffect(() => {
+      if (openDialog) {
+         let oldPath = window.location.pathname;
+         const newPath = `/users/${userHandle}/post/${postId}`;
+
+         if (oldPath === newPath) oldPath = `/users/${userHandle}`;
+
+         window.history.pushState(null, null, newPath);
+
+         setOldPath(oldPath);
+         setOpen(true);
+
+         dispatch(getPost(postId));
+      }
+   }, [dispatch, openDialog, postId, userHandle]);
 
    const dialogMarkup = UI.loading ? (
       <div className={classes.progressDiv}>
