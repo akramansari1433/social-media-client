@@ -10,7 +10,6 @@ import noImg from "../Images/no-img.png";
 
 const useStyle = makeStyles({
    card: {
-      margin: "0 20px",
       marginBottom: 15,
    },
    title: {

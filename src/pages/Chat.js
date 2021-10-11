@@ -5,6 +5,7 @@ import { Send } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getMessages, sendMessage } from "../redux/actions/dataActions";
 import Message from "../components/Message/Message";
+import { Redirect } from "react-router";
 
 const useStyles = makeStyles({
    form: {
@@ -17,8 +18,7 @@ const useStyles = makeStyles({
    container: {
       display: "flex",
       alignItems: "center",
-      justifyContent: "center",
-      padding: "10px 20px",
+      padding: "10px",
    },
    formInput: {
       flex: "1",
@@ -33,6 +33,7 @@ function Chat() {
    const classes = useStyles();
    const { messages, loading } = useSelector((state) => state.data);
    const { handle } = useSelector((state) => state.user.credentials);
+   const { authenticated } = useSelector((state) => state.user);
    const [message, setMessage] = useState();
 
    useEffect(() => {
@@ -49,7 +50,7 @@ function Chat() {
       event.target.reset();
    };
 
-   return (
+   const chatMarkup = authenticated ? (
       <div>
          <form className={classes.form} onSubmit={handleSubmit}>
             <Grid container className={classes.container}>
@@ -70,7 +71,7 @@ function Chat() {
             </Grid>
          </form>
 
-         <FlipMove>
+         <FlipMove style={{ marginBottom: "80px" }}>
             {loading ? (
                <p>Loading...</p>
             ) : (
@@ -84,7 +85,11 @@ function Chat() {
             )}
          </FlipMove>
       </div>
+   ) : (
+      <Redirect to="/login" />
    );
+
+   return chatMarkup;
 }
 
 export default Chat;

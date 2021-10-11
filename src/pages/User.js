@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,17 @@ import { getUserData } from "../redux/actions/dataActions";
 import PostSkeleton from "../utils/PostSkeleton";
 import ProfileSkeleton from "../utils/ProfileSkeleton";
 
+const useStyles = makeStyles({
+   profile: {
+      padding: "0 1rem",
+   },
+   post: {
+      padding: "0 1rem",
+   },
+});
+
 function User() {
+   const classes = useStyles();
    const dispatch = useDispatch();
    const { posts, loading } = useSelector((state) => state.data);
    const [profile, setProfile] = useState(null);
@@ -46,14 +56,14 @@ function User() {
    );
    return (
       <Grid container>
-         <Grid item sm={4} xs={12}>
+         <Grid item sm={4} xs={12} className={classes.profile}>
             {profile === null ? (
                <ProfileSkeleton />
             ) : (
                <StaticProfile profile={profile} />
             )}
          </Grid>
-         <Grid item sm={8} xs={12}>
+         <Grid item sm={8} xs={12} className={classes.post}>
             {postsMarkup}
          </Grid>
       </Grid>
